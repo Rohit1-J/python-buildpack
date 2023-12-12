@@ -442,7 +442,7 @@ func (s *Supplier) InstallPlaywright() error {
 	s.Log.Info("------> Installing Playwright libs")
 
 	// python -m playwright install --with-deps
-    cmd := exec.Command("python", "-m", "playwright", "install", "--with-deps")
+    cmd := exec.Command("playwright", "install", "--with-deps")
 	output, err := cmd.CombinedOutput()
 
 	if err != nil {
