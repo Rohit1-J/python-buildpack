@@ -122,10 +122,7 @@ func RunPython(s *Supplier) error {
 		return err
 	}
 
-	if err := s.InstallPlaywright(); err != nil {
-		s.Log.Error("Could not install Playwright: %v", err)
-		return err
-	}
+	
 
 	if err := s.HandleFfi(); err != nil {
 		s.Log.Error("Error checking ffi: %v", err)
@@ -156,6 +153,12 @@ func RunPython(s *Supplier) error {
 
 	if err := s.DownloadNLTKCorpora(); err != nil {
 		s.Log.Error("Could not download NLTK Corpora: %v", err)
+		return err
+	}
+
+
+	if err := s.InstallPlaywright(); err != nil {
+		s.Log.Error("Could not install Playwright: %v", err)
 		return err
 	}
 
