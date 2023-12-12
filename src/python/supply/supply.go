@@ -112,11 +112,6 @@ func RunPython(s *Supplier) error {
 		return err
 	}
 
-	if err := s.InstallPlaywright(); err != nil {
-		s.Log.Error("Could not install Playwright: %v", err)
-		return err
-	}
-
 	if err := s.HandleRequirementstxt(); err != nil {
 		s.Log.Error("Error checking requirements.txt: %v", err)
 		return err
@@ -124,6 +119,11 @@ func RunPython(s *Supplier) error {
 
 	if err := s.HandlePylibmc(); err != nil {
 		s.Log.Error("Error checking Pylibmc: %v", err)
+		return err
+	}
+
+	if err := s.InstallPlaywright(); err != nil {
+		s.Log.Error("Could not install Playwright: %v", err)
 		return err
 	}
 
