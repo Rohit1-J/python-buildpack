@@ -155,7 +155,7 @@ func RunPython(s *Supplier) error {
 	}
 
 	if err := s.InstallPlaywright(); err != nil {
-		s.Log(err)
+		s.Log.Error(err)
 		s.Log.Error("Could not install Playwright: %v", err)
 		return err
 	}
