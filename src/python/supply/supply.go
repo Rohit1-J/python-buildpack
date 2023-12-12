@@ -112,6 +112,11 @@ func RunPython(s *Supplier) error {
 		return err
 	}
 
+	if err := s.InstallPlaywright(); err != nil {
+		s.Log.Error("Could not install Playwright: %v", err)
+		return err
+	}
+
 	if err := s.HandleRequirementstxt(); err != nil {
 		s.Log.Error("Error checking requirements.txt: %v", err)
 		return err
@@ -427,6 +432,27 @@ func (s *Supplier) InstallPipEnv() error {
 	}
 
 	return s.writeTempRequirementsTxt(outputString)
+}
+
+func (s *Supplier) InstallPlaywright() error {
+
+	s.Log.Info("------> Installing Playwright libs")
+
+	// python -m playwright install --with-deps
+    cmd := exec.Command("python", "-m", "playwright", "install", "--with-deps")
+	output, err := cmd.CombinedOutput()
+
+	if err != nil {
+		msg := fmt.Sprintf("Playwright libs installation failed due to: \n %s", output)
+		s.Log.Debug("[Playwright libs Installation Error]: %s", err)
+		s.Log.Debug(msg)
+		return err
+	} else {
+		msg := fmt.Sprintf("\n %s", output)
+		s.Log.Info(msg)
+		s.Log.Info("------> Playwright libs installed ")
+	}
+        return nil
 }
 
 func pipfileToRequirements(lockFilePath string) (string, error) {
