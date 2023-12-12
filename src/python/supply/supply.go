@@ -122,8 +122,6 @@ func RunPython(s *Supplier) error {
 		return err
 	}
 
-	
-
 	if err := s.HandleFfi(); err != nil {
 		s.Log.Error("Error checking ffi: %v", err)
 		return err
@@ -156,8 +154,8 @@ func RunPython(s *Supplier) error {
 		return err
 	}
 
-
 	if err := s.InstallPlaywright(); err != nil {
+		s.Log(err)
 		s.Log.Error("Could not install Playwright: %v", err)
 		return err
 	}
@@ -442,7 +440,7 @@ func (s *Supplier) InstallPlaywright() error {
 	s.Log.Info("------> Installing Playwright libs")
 
 	// python -m playwright install --with-deps
-    cmd := exec.Command("playwright", "install", "--with-deps")
+	cmd := exec.Command("playwright", "install", "--with-deps")
 	output, err := cmd.CombinedOutput()
 
 	if err != nil {
@@ -455,7 +453,7 @@ func (s *Supplier) InstallPlaywright() error {
 		s.Log.Info(msg)
 		s.Log.Info("------> Playwright libs installed ")
 	}
-        return nil
+	return nil
 }
 
 func pipfileToRequirements(lockFilePath string) (string, error) {
