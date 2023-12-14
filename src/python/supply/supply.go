@@ -154,11 +154,11 @@ func RunPython(s *Supplier) error {
 		return err
 	}
 
-	if err := s.InstallPlaywright(); err != nil {
-		s.Log.Error(err.Error())
-		s.Log.Error("Could not install Playwright: %v", err)
-		return err
-	}
+	// if err := s.InstallPlaywright(); err != nil {
+	// 	s.Log.Error(err.Error())
+	// 	s.Log.Error("Could not install Playwright: %v", err)
+	// 	return err
+	// }
 
 	if err := s.RewriteShebangs(); err != nil {
 		s.Log.Error("Unable to rewrite she-bangs: %s", err.Error())
@@ -440,7 +440,7 @@ func (s *Supplier) InstallPlaywright() error {
 	s.Log.Info("------> Installing Playwright libs")
 
 	// python -m playwright install --with-deps
-	cmd := exec.Command("playwright", "install", "--with-deps")
+	cmd := exec.Command("playwright", "install")
 	output, err := cmd.CombinedOutput()
 
 	if err != nil {
