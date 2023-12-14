@@ -15,6 +15,12 @@ source "$BUILDPACK_DIR/scripts/install_go.sh"
 output_dir=$(mktemp -d -t supplyXXX)
 
 echo "-----> Running go build supply"
+# Install Playwright dependencies
+echo "=============================== RJ - Custom Dependencies(Start) ========================="
+apt-get update
+apt-get install -y libnss3 libxslt1.1 libglib2.0-0 libfontconfig1 libpango-1.0-0 libx11-6 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libgdk-pixbuf2.0-0 libatk1.0-0 libatk-bridge2.0-0 libepoxy0 libgbm1
+
+echo "=============================== RJ - Custom Dependencies(End) ========================="
 pushd $BUILDPACK_DIR
     $GoInstallDir/bin/go build -mod=vendor -o $output_dir/supply ./src/python/supply/cli
 popd
